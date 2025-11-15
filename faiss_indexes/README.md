@@ -1,43 +1,32 @@
 # FAISS Indexes
-
-Overview
---------
-This folder contains prebuilt FAISS index files used by the backend for fast similarity search over product documentation.
-
-Structure
----------
-Each subfolder corresponds to a product category and contains a binary FAISS index (for example `index.faiss`). Example categories present in this repo include:
-
-- `cameras`
 # FAISS Indexes
 
 Overview
 --------
-This folder contains prebuilt FAISS index files used by the backend for fast similarity search over product documentation.
+This folder is intended to hold prebuilt FAISS binary indexes for each product category. FAISS indexes provide efficient vector similarity search used by the backend retrieval pipeline.
 
-Structure
----------
-Each subfolder corresponds to a product category and contains a binary FAISS index (for example `index.faiss`). Example categories present in this repo include:
+Folder layout and manifest
+--------------------------
+Each category lives in its own directory, e.g.:
 
-- `cameras`
-- `gaming_consoles`
-- `headphones_and_speakers`
-- `laptops`
-- `mobiles`
-- `tablets`
-- `televisions`
-- `wearables`
+- `faiss_indexes/cameras/index.faiss`
+- `faiss_indexes/laptops/index.faiss`
 
-Notes
------
-- These index files are binary artifacts and are large; they are excluded from version control by the root `.gitignore`.
-- If you need to rebuild the indexes, the standard flow is:
+Suggested `manifest.json` (repo-level helper)
 
-  1. Prepare your document corpus (one document per product or paragraph chunk).
-  2. Use a Sentence-Transformers model (for example `all-mpnet-base-v2`) to compute embeddings.
-  3. Build a FAISS index from those embeddings and persist it to the category folder.
+```json
+{
+  "categories": ["cameras","gaming_consoles","headphones_and_speakers","laptops","mobiles","tablets","televisions","wearables"]
+}
+```
 
-Example (very small) Python sketch to build an index
+Rebuilding indexes (recommended workflow)
+----------------------------------------
+1. Prepare a corpus of documents for a category. Split long product pages into paragraph chunks of ~200-500 words.
+2. Use `sentence-transformers/all-mpnet-base-v2` (or a fine-tuned variant) to compute 768-dimensional embeddings.
+3. Build a FAISS index and save it as `index.faiss` inside the category folder.
+
+Minimal Python example
 
 ```python
 from sentence_transformers import SentenceTransformer
@@ -46,6 +35,31 @@ import numpy as np
 
 model = SentenceTransformer('sentence-transformers/all-mpnet-base-v2')
 docs = ["product description 1", "product description 2"]
+embs = model.encode(docs, convert_to_numpy=True)
+
+d = embs.shape[1]
+index = faiss.IndexFlatL2(d)
+index.add(np.array(embs, dtype='float32'))
+faiss.write_index(index, 'index.faiss')
+```
+
+Performance & storage guidance
+-----------------------------
+- Use `faiss.IndexFlatIP` for cosine/inner-product search with normalized vectors, or `IndexIVFFlat` for larger corpora with an indexing step.
+- Keep an eye on index size — large corpora will produce large files. Use sharding or quantization when necessary.
+
+Distribution and versioning of indexes
+-------------------------------------
+- Do not commit binary indexes into the main git history (they are ignored by `.gitignore`).
+- Recommended approaches to share or deploy indexes:
+  - Upload to S3/GCS and download during deployment.
+  - Store in GitHub Releases as artifacts.
+  - Use Git LFS if you must track them in git (configure `.gitattributes`).
+
+Automation idea (helper script)
+------------------------------
+- Add a `scripts/` folder with `build_index.py` and `upload_indexes.ps1` to standardize index building and publish to cloud storage.
+
 embs = model.encode(docs, convert_to_numpy=True)
 
 d = embs.shape[1]
