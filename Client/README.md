@@ -12,6 +12,20 @@ Key files
 
 Tech stack
 ----------
+# Client (Frontend)
+
+Overview
+--------
+This folder contains the React frontend built with Vite and TypeScript. It provides the UI, user authentication, category selection, chat interface, and calls backend endpoints under `/api/*` and `/ask`.
+
+Key files
+---------
+- `src/main.tsx` — app entry point
+- `src/App.tsx` — main application layout
+- `src/components/` — UI components
+
+Tech stack
+----------
 - Vite + React
 - TypeScript
 - Tailwind CSS

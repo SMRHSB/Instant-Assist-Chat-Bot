@@ -5,6 +5,13 @@ Overview
 This folder contains the backend `Server/`, model artifacts (a fine-tuned Sentence-Transformers folder), and local instance data.
 
 Key subfolders
+# FYP Files
+
+Overview
+--------
+This folder contains the backend `Server/`, model artifacts (a fine-tuned Sentence-Transformers folder), and local instance data.
+
+Key subfolders
 --------------
 - `Server/` — Flask backend that handles authentication, session management, and an `/ask` endpoint which uses FAISS-based retrieval + an LLM.
 - `Server/fine-tuned-all-mpnet-base-v2/` — local copy of the fine-tuned embedding model (large; excluded from git).

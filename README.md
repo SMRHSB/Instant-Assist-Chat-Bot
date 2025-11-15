@@ -29,6 +29,37 @@ npm install
 npm run dev
 ```
 
+# Instant Assist Chat Bot
+
+Overview
+--------
+This repository contains a product assistant application composed of:
+
+- `Client/` — React + Vite frontend (UI, auth, chat interface)
+- `FYP Files/` — backend server, fine-tuned embedding model artifacts, and DB instance
+- `faiss_indexes/` — prebuilt FAISS index folders (binary indexes used for retrieval)
+
+Architecture (flow)
+-------------------
+```mermaid
+flowchart LR
+  Client[Client (React/Vite)] -->|HTTP: /ask, /api/*| Server[Server (Flask)]
+  Server -->|Similarity search| FAISS[FAISS Indexes]
+  Server -->|Embeddings & model files| Model[Local fine-tuned model folder]
+  Server -->|Session persistence| DB[(instance/chatdb.sqlite3 or MySQL)]
+```
+
+Quickstart
+----------
+
+Frontend
+
+```powershell
+cd Client
+npm install
+npm run dev
+```
+
 Backend (development)
 
 ```powershell

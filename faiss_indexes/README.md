@@ -9,6 +9,17 @@ Structure
 Each subfolder corresponds to a product category and contains a binary FAISS index (for example `index.faiss`). Example categories present in this repo include:
 
 - `cameras`
+# FAISS Indexes
+
+Overview
+--------
+This folder contains prebuilt FAISS index files used by the backend for fast similarity search over product documentation.
+
+Structure
+---------
+Each subfolder corresponds to a product category and contains a binary FAISS index (for example `index.faiss`). Example categories present in this repo include:
+
+- `cameras`
 - `gaming_consoles`
 - `headphones_and_speakers`
 - `laptops`
