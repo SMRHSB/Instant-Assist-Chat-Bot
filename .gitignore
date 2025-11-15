@@ -1,0 +1,48 @@
+# Node
+node_modules/
+Client/node_modules/
+
+# Vite build
+dist/
+
+# Python
+.venv/
+venv/
+**/.venv/
+__pycache__/
+*.py[cod]
+
+# Environment files / secrets
+.env
+.env.*
+env/
+
+# IDEs and OS
+.vscode/
+.idea/
+.DS_Store
+
+# Logs
+*.log
+
+# Database and instance
+FYP Files/Server/instance/
+FYP Files/Server/instance/*.sqlite3
+**/instance/*.sqlite3
+
+# Model artifacts and large ML files
+FYP Files/Server/fine-tuned-all-mpnet-base-v2/
+FYP Files/Server/fine-tuned-all-mpnet-base-v2/**
+*.safetensors
+*.bin
+*.pt
+*.ckpt
+
+# FAISS indexes and other binary indexes
+faiss_indexes/
+**/index.faiss
+
+# Other heavy artifacts
+*.tar.gz
+*.zip
+*.egg-info/
