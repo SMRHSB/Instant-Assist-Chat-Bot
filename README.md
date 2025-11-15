@@ -12,10 +12,10 @@ Architecture (flow)
 -------------------
 ```mermaid
 flowchart LR
-  Client[Client (React/Vite)] -->|HTTP: /ask, /api/*| Server[Server (Flask)]
-  Server -->|Similarity search| FAISS[FAISS Indexes]
-  Server -->|Embeddings & model files| Model[Local fine-tuned model folder]
-  Server -->|Session persistence| DB[(instance/chatdb.sqlite3 or MySQL)]
+  Client[Client (React/Vite)] -->|"HTTP: /ask, /api/*"| Server[Server (Flask)]
+  Server -->|"Similarity search"| FAISS[FAISS Indexes]
+  Server -->|"Embeddings & model files"| Model[Local fine-tuned model folder]
+  Server -->|"Session persistence"| DB[(instance/chatdb.sqlite3 or MySQL)]
 ```
 
 Quickstart
